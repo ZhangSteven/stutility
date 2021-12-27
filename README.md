@@ -8,3 +8,7 @@ This is based on the steven_utils package, providing pretty much the same set of
 2. I want to organize the module structure and import structure better, using __init__.py.
 
 3. I want to test how pipenv works.
+
+
+## Unit Test
+Run "python test_stutility.py" will do.

@@ -1,6 +1,10 @@
 """
 The module aims to provide iterator related functions.
 """
+
+__all__ = ('firstof', 'firstn', 'skipn', 'allequal', 'num_elements')
+
+
 def firstof(func, L):
     """
     Return the first element in L that makes the function 'func' evaluating

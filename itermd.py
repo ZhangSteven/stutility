@@ -1,18 +1,31 @@
 """
 The module aims to provide iterator related functions.
 """
-
-from itertools import dropwhile
-from functools import partial
-from toolz.functoolz import compose
-
-
 def firstof(func, L):
     """
     Return the first element in L that makes the function 'func' evaluating
     to True.
     """
-    return next(el for el in L if func(el))
+    try:
+        return next(filter(func, L))
+    except StopIteration:
+        raise ValueError('no element satisfies func') from None
+
+
+def firstn(n, L):
+    """
+    Return the first n elements of L, n >= 0. When L has less than n
+    elements, all elements in L are returned.
+    """
+    if isinstance(n, int) and n > -1:
+        for idx, el in enumerate(L):
+            if idx < n:
+                yield el
+            else:
+                break
+    
+    else:
+        raise ValueError(f'invalid argument: n={n}')
 
 
 def skipn(n, L):
@@ -29,7 +42,22 @@ def skipn(n, L):
                 yield el
     
     else:
-        raise ValueError(f'skipn() invalid argument: n={n}')
+        raise ValueError(f'invalid argument: n={n}')
+
+
+def allequal(L):
+    """
+    Test whether all elements in Iterable L are equal.
+
+    Returns True if L has zero or only one element.
+    """
+    iterator = iter(L)
+    try:
+        first = next(iterator)
+    except StopIteration:
+        return True
+    else:
+        return all(first==x for x in iterator)
 
 
 def num_elements(L):
